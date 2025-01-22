@@ -1,7 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 name: Contribution Tracker
 
+permissions:
+  contents: read
+  pull-requests: read
+
 on:
+  schedule:
+    - cron: '0 0 */7 * *' # Runs every 7 days
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -12,21 +18,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js (optional, for GitHub CLI)
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-
-    - name: Install GitHub CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install gh -y
-
     - name: Generate Contribution Report
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "Generating contribution report..."
+        # Your existing script for counting commits and fetching PRs
 
         # Count commits for the last 7 days
         echo "Commits by contributors (last 7 days):" > contributions.txt
